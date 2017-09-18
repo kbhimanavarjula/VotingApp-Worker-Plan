@@ -5,7 +5,7 @@ pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
 pkg_source="https://github.com/kbhimanavarjula/VotingApp"
 pkg_shasum=""
-pkg_deps=(core/tomcat8)  
+pkg_deps=(core/dotnet-core core/tomcat8)  
 pkg_build_deps=(core/git core/maven)
 pkg_expose=(8080)  
 pkg_svc_user="root"
@@ -39,8 +39,9 @@ do_build()
     build_line "do_build() ===================================================="
     # Maven requires JAVA_HOME to be set, and can be set via:  
     export JAVA_HOME=$(hab pkg path core/jdk8)
-    cd ${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}  
-#    mvn package  
+#    cd ${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}  
+    cd  ${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}/worker
+    mvn package  
 }
 
 do_install()
