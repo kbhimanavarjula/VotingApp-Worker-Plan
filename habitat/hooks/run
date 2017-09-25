@@ -1,0 +1,3 @@
+exec 2>&1
+cd src/Worker/src/Worker
+dotnet run

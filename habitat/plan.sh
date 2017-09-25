@@ -5,7 +5,7 @@ pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
 pkg_source="https://github.com/kbhimanavarjula/VotingApp"
 pkg_shasum=""
-pkg_deps=(core/dotnet-core core/tomcat8)  
+pkg_deps=(core/dotnet-core core/dotnet-core-sdk core/tomcat8)  
 pkg_build_deps=(core/git core/maven)
 pkg_expose=(8080)  
 pkg_svc_user="root"
@@ -51,10 +51,13 @@ do_install()
     # so now they need to be copied into the root directory of our package through
     # the pkg_prefix variable. This is so that we have the source files available
     # in the package.
-    local source_dir="${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}/gameoflife-web"
+    local source_dir="${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}"
     local webapps_dir="$(hab pkg path core/tomcat8)/tc/webapps"
     #cp ${source_dir}/target/gameoflife.war ${webapps_dir}/
 #    cp ${source_dir}/target/gameoflife.war /root/
+    mkdir /src/Worker
+    cp -vr ${source_dir}/worker/* ${vote_dirname}/
+    cp -vr ${source_dir}/worker/* /src/Worker/
     echo $(hab pkg path core/tomcat8) > /root/log
 }
 
